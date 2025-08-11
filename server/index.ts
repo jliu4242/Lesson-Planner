@@ -2,11 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { OpenAI } from 'openai';
+import { getMarkdown } from './docConverter';
+import multer from "multer";
+import mammoth from 'mammoth'
+import fs from 'fs';
 
 dotenv.config();
 
 const app = express();
 const PORT = 3001;
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(cors());
 app.use(express.json());
@@ -15,30 +20,36 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.post('/generate', async (req, res) => {
-    console.log("Request received!");
-    const { textbooks, chapters, duration } = req.body;
+async function convertDocxToHtml(buffer: Buffer) {
+    try {
+      const result = await mammoth.convertToHtml({ buffer: buffer });
+      const html = result.value; // HTML string with tables and paragraphs preserved
+      return html;
+    } catch (err) {
+      console.error('Error converting docx:', err);
+      throw err;
+    }
+}
+
+app.post('/generate', upload.single("file"), async (req, res) => {
+    console.log('request recieved');
+
+    const examples = req.file;
+
+    let result = null;
+    if (examples) {
+        const result = await mammoth.convertToHtml({
+            buffer: examples.buffer,
+          });
+    }
+    console.log('file converted');
+
+    const {textbooks, chapters, duration} = req.body;
+
     const prompt = `Here are the ${textbooks} I want to make my lesson plans based on. The lesson plan should be in point form and should be succint and not detailed
                     and there should be practice problems provided.
-                    I want the lesson plan to be made for these ${chapters} and the lesson plan should cover a ${duration} hour long class
-                    The response should be in a table format. Here are a few examples of what the lesson place should look like. 
-                    Please format the math problems properly and not as I've done
-
-                    |----------------------------------|----------------------------|
-                    |Itinerary:                        |Problems
-                    |   Review on functions            |    Lim x->0 y=sinx
-                    |       What is it?                |    Lim x->0 y=1/x
-                    |       Additive f(x+a)            |    
-                    |       Quick straight line graph  |
-                    |   Why calculus? (why derivatives)|
-                    |       Y = mx + b meaning         |
-                    |       Relate to derivatives      |
-                    |        and why calculus          |
-                    |   Limits                         |
-                    |       Definition of limit        |
-                    |       Limit from + and -         |
-                    |       Calculating limits         |
-                    |       Plugging in values         |
+                    I want the lesson plan to be made for these ${chapters} and the lesson plan should cover a ${duration} hour long class.
+                    Here are examples of exactly what the structure the lesson plans should have. ${result}
 `
     
     const gptResponse = await openai.chat.completions.create({

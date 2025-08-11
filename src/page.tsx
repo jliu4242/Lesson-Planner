@@ -7,7 +7,6 @@ export default function Page() {
     return (
         <StrictMode>
             <App />
-            <LessonPlan />
         </StrictMode>
     );
 }
