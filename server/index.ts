@@ -31,14 +31,14 @@ async function convertDocxToHtml(buffer: Buffer) {
     }
 }
 
-app.post('/generate', upload.single("file"), async (req, res) => {
-    console.log('request recieved');
-
+app.post('/generate', upload.single('file'), async (req, res) => {
+    console.log('request recieved')
     const examples = req.file;
+    console.log(examples);
 
-    let result = null;
+    let result;
     if (examples) {
-        const result = await mammoth.convertToHtml({
+        result = await mammoth.convertToHtml({
             buffer: examples.buffer,
           });
     }
@@ -57,6 +57,7 @@ app.post('/generate', upload.single("file"), async (req, res) => {
         messages: [{ role:'user', content: prompt }],
     });
 
+    console.log('gpt response');
     res.json({ response: gptResponse})
 })
 
