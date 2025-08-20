@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --text-main: rgba(202,200,200,0.633);
 }
 
 @media (prefers-color-scheme: light) {
@@ -25,4 +27,3 @@
     background-color: #f9f9f9;
   }
 }
-

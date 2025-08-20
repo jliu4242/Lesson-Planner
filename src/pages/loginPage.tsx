@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 // @ts-ignore
 import { auth } from "../../firebase/firebase.js";
@@ -23,4 +24,21 @@ const FirebaseAuth = () => {
   return <div id="firebaseui-auth-container"></div>;
 };
 
-export default FirebaseAuth;
+const loginPage: React.FC = () => {
+  // Completely blank page that still fills the space
+  return (
+  <>
+    <div className="h-full flex items-center justify-center">
+        <form className='w-120 dark:bg-slate-800 text-center align-middle'>
+            <div className='text-[var(--text-main)] text-size-200'>
+                <h2>Log In</h2>
+            </div>
+            <FirebaseAuth />
+        </form>
+    </div>
+   
+  </>
+  )
+};
+
+export default loginPage;

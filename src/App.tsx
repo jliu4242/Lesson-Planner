@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import FormPage from "./pages/generatePage";
 import BlankPage from "./pages/planStorage";
+import LoginPage from "./pages/loginPage";
 
 const App: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -21,12 +22,9 @@ const App: React.FC = () => {
                 Blank Page
               </Link>
             </div>
-            <button
-              onClick={() => setIsLoggedIn((v) => !v)}
-              className="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded"
-            >
-              {isLoggedIn ? "Logout" : "Login / Sign Up"}
-            </button>
+            <Link to='/auth' className='px-4 py-2 bg-black border border-transparent text-white rounded-lg hover:border-[#646cff]'>
+                {isLoggedIn ? "Logout" : "Login / Sign Up"}
+            </Link>
           </nav>
   
           {/* Fill the rest of the screen */}
@@ -34,6 +32,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<FormPage />} />
               <Route path="/blank" element={<BlankPage />} />
+              <Route path='/auth' element={<LoginPage />} />
             </Routes>
           </main>
         </div>
