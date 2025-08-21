@@ -1,17 +1,18 @@
+
 import React, { useState } from 'react';
-import Firebase from "../../firebase"
+import Firebase from "../../firebase/firebase.ts"
 
 const firebase = new Firebase();
 
-const SignUp: React.FC = () => {
+const SignIn: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const userCred = await firebase.doCreateUserWithEmailAndPassword(email, password);
-            console.log("registered user:", userCred.user)
+            const userCred = await firebase.doSignInWithEmailAndPassword(email, password);
+            console.log("Logged in user:", userCred.user)
         } catch (err) {
             console.error(err);
         }
@@ -27,9 +28,9 @@ const SignUp: React.FC = () => {
                     placeholder='password' 
                     value={password}
                     onChange={e => setPassword(e.target.value)} />
-            <button type='submit'>Register</button>
+            <button type='submit'>Login</button>
         </form>
     )
 }
 
-export default SignUp;
+export default SignIn;

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import FormPage from "./pages/generatePage";
 import BlankPage from "./pages/planStorage";
-import LoginPage from "./pages/loginPage";
+import SignIn from "./pages/signin";
 
 const App: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<FormPage />} />
               <Route path="/blank" element={<BlankPage />} />
-              <Route path='/auth' element={<LoginPage />} />
+              <Route path='/auth' element={<SignIn />} />
             </Routes>
           </main>
         </div>
