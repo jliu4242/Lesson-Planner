@@ -5,15 +5,27 @@ import { auth } from "../../firebase/firebase.js";
 import { GoogleAuthProvider, EmailAuthProvider } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
+import { useNavigate } from 'react-router-dom';
 
 const FirebaseAuth = () => {
+    const navigate = useNavigate();
+
   useEffect(() => {
     const ui =
       firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
 
     const uiConfig = {
-      signInSuccessUrl: "../pages/generatePage",
-      signInOptions: [GoogleAuthProvider.PROVIDER_ID, EmailAuthProvider.PROVIDER_ID],
+        callbacks: {
+            signInSuccessWithAuthResult: (authResult) => {
+                console.log('logged in');
+                navigate("/generatePage");
+                return false;
+            }
+        },
+      signInOptions: [
+        GoogleAuthProvider.PROVIDER_ID, 
+        EmailAuthProvider.PROVIDER_ID
+        ],
     };
 
     ui.start("#firebaseui-auth-container", uiConfig);
