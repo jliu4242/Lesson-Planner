@@ -1,8 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth, EmailAuthProvider} from 'firebase/auth';
-import * as firebaseui from 'firebaseui';
-import firebase from "firebase/compat/app";
 import { GoogleAuthProvider } from 'firebase/auth/web-extension';
 
 const firebaseConfig = {
