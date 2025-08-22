@@ -1,6 +1,10 @@
 
 import React, { useState } from 'react';
-import Firebase from "../../firebase/firebase.ts"
+import {Firebase, ui, uiConfig} from "../../firebase/firebase.ts";
+import '../styles/firebase-ui.css';
+
+ui.start('#firebaseui-auth-container', uiConfig);
+
 
 const firebase = new Firebase();
 
@@ -29,6 +33,9 @@ const SignIn: React.FC = () => {
                     value={password}
                     onChange={e => setPassword(e.target.value)} />
             <button type='submit'>Login</button>
+            <div id='firebaseui-auth-container'>
+                hello
+            </div>
         </form>
     )
 }

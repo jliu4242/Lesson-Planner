@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Firebase from "../../firebase"
+import Firebase from "../../firebase/firebase.ts"
 
 const firebase = new Firebase();
 
