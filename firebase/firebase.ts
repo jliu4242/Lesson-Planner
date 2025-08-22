@@ -3,6 +3,7 @@ import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth, EmailAuthProvider} from 'firebase/auth';
 import * as firebaseui from 'firebaseui';
 import firebase from "firebase/compat/app";
+import { GoogleAuthProvider } from 'firebase/auth/web-extension';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAK4cD639TmAWOKlMXtdNdE5mRxN9-5Gq8",
@@ -43,16 +44,4 @@ export default Firebase;
 
 export { auth, EmailAuthProvider };
 
-export const ui = new firebaseui.auth.AuthUI(auth);
-
-export const uiConfig: firebaseui.auth.Config = {
-    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-    signInFlow: 'popup',
-    callbacks: {
-      signInSuccessWithAuthResult: () => true,
-      uiShown: () => {
-        const loader = document.getElementById('loader');
-        if (loader) loader.style.display = 'none';
-      },
-    },
-  };
+export const googleProvider = new GoogleAuthProvider();

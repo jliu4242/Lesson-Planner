@@ -1,0 +1,16 @@
+input {
+    height: 40px;
+    width: 60%;
+    background-color: #4d4fba42;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 9px;
+    color: rgba(202, 200, 200, 0.633);
+    text-align: middle;
+    background-color: #1e293b;
+}

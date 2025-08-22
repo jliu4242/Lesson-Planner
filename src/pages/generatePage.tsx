@@ -48,13 +48,12 @@ function generatePage() {
   return (
     <>
         <div className= 'w-screen'>
-            <form className='h-190 mx-auto w-full max-w-xl space-y-8 divide-y divide-gray-200 bg-white 
-                                text-left shadow dark:divide-slate-200/5 dark:bg-slate-800 sm:overflow-hidden sm:rounded-md'>
-                <div id='title' className='text-left'>
+            <div id='title' className='text-center'>
                     <h1>Textbook to Lesson Plan</h1>
                     <p className='text-[rgba(202,200,200,0.633)]'>Create a custom lesson plan using your desired textbooks</p>
-                </div>
-
+            </div>
+            <form className='h-190 mx-auto w-full max-w-xl space-y-8 divide-y divide-gray-200 bg-white 
+                                text-left shadow dark:divide-slate-200/5 dark:bg-slate-800 sm:overflow-hidden sm:rounded-md'>
                 <div className='space-y-8 divide-y divide-gray-200 px-4 py-5 dark:divide-slate-200/5 sm:p-6'>
                     <div>
                         <label>Select .docx file</label>
