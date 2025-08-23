@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth, EmailAuthProvider} from 'firebase/auth';
 import { GoogleAuthProvider } from 'firebase/auth/web-extension';
+import { collection, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAK4cD639TmAWOKlMXtdNdE5mRxN9-5Gq8",
@@ -40,6 +41,6 @@ export class Firebase {
 
 export default Firebase;
 
-export { auth, EmailAuthProvider };
+export { db, auth, EmailAuthProvider };
 
 export const googleProvider = new GoogleAuthProvider();
