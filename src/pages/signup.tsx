@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Firebase from "../../firebase/firebase.ts"
 import { signUp } from '../../firebase/authservice.ts';
+import { useNavigate } from 'react-router-dom';
 
 const firebase = new Firebase();
 
@@ -9,6 +10,8 @@ const SignUp: React.FC = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const navigate = useNavigate();
+
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -16,6 +19,7 @@ const SignUp: React.FC = () => {
             if (validPassword()) {
                 const userCred = await signUp(email, password);
                 console.log("registered user:", userCred.user)
+                navigate('/generate');
             }
             
         } catch (err) {
