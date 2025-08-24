@@ -6,7 +6,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import '../styles/App.css';
-import 'katex/dist/katex.min'
+import { InlineMath, BlockMath } from 'react-katex';
 
 
 function generatePage() {

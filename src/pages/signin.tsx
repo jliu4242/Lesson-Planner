@@ -4,13 +4,17 @@ import {Firebase, auth} from "../../firebase/firebase.ts";
 import '../styles/firebase-ui.css';
 import '../styles/signin.css';
 import * as firebaseui from 'firebaseui';
+import { logIn } from '../../firebase/authservice.ts';
+import { useNavigate } from 'react-router-dom';
 
 
 const firebase = new Firebase();
 
+
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     let ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
 
@@ -24,11 +28,14 @@ const SignIn: React.FC = () => {
               provider: "google.com",
               fullLabel: "Continue with Google",
             },
-            "password", // email/password
           ],
           signInFlow: "popup",
           callbacks: {
-            signInSuccessWithAuthResult: () => false, // stay on page
+            signInSuccessWithAuthResult: () => {
+                console.log("This should log!"); // Test this first
+                navigate("/storage");
+                return false;
+            }, // stay on page
           },
         });
     
@@ -41,7 +48,7 @@ const SignIn: React.FC = () => {
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const userCred = await firebase.doSignInWithEmailAndPassword(email, password);
+            const userCred = await logIn(email, password);
             console.log("Logged in user:", userCred.user)
         } catch (err) {
             console.error(err);
@@ -75,7 +82,8 @@ const SignIn: React.FC = () => {
                         onChange={e => setPassword(e.target.value)} />
                 </div>
                     
-                <button className='mb-10' type='submit'>Login</button>
+                <button className='' type='submit'>Login</button>
+                <p>Don't have an account? Sign up <a href='/signup' className='text-blue-500 underline'>here</a></p>
             </form>
         </div>
     )

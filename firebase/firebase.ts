@@ -28,14 +28,6 @@ export class Firebase {
         this.auth = auth;
         this.db = db;
     }
-
-    doCreateUserWithEmailAndPassword = (email: string, password: string) =>
-        createUserWithEmailAndPassword(this.auth, email, password);
-
-    doSignInWithEmailAndPassword = (email: string, password: string) =>
-        signInWithEmailAndPassword(this.auth, email, password);
-
-    doSignOut = () => signOut(this.auth);
 }
 
 export default Firebase;
