@@ -1,7 +1,12 @@
 
 import '../styles/tailwind.css';
 import { useState } from 'react';
+import { db } from '../../firebase/firebase.ts';
+import { collection, addDoc } from 'firebase/firestore';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import '../styles/App.css';
+import 'katex/dist/katex.min'
 
 
 function generatePage() {
@@ -9,6 +14,7 @@ function generatePage() {
     const [chapters, setChapters] = useState('');
     const [duration, setDuration] = useState('');
     const [result, setResult] = useState('');
+    const [lessonName, setLessonName] = useState('');
     const [examplePlans, setExamplePlans] = useState<File | null>(null);
     const [showButton, setShowButton] = useState(false);
 
@@ -24,6 +30,7 @@ function generatePage() {
         formData.append('textbooks', JSON.stringify(textbooks));
         formData.append('chapters', JSON.stringify(chapters));
         formData.append('duration', JSON.stringify(duration));
+        formData.append('title', JSON.stringify(lessonName));
         for (const pair of formData.entries()) {
             console.log(pair[0], pair[1]);
         }
@@ -42,7 +49,15 @@ function generatePage() {
     }
 
     const savePlan = async () => {
-        console.log('hll')
+        try {
+            const docRef = await addDoc(collection(db, 'lessonplans'), {
+                lessonPlanName: lessonName,
+                lessonPlan: result
+            });
+            console.log('Lesson plan added with ID: ', docRef.id);
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
     }
 
   return (
@@ -50,11 +65,11 @@ function generatePage() {
         <div className= 'w-screen'>
             <div id='title' className='text-center'>
                     <h1>Textbook to Lesson Plan</h1>
-                    <p className='text-[rgba(202,200,200,0.633)]'>Create a custom lesson plan using your desired textbooks</p>
+                    <p className='text-[var(--text-main)]'>Create a custom lesson plan using your desired textbooks</p>
             </div>
-            <form className='h-190 mx-auto w-full max-w-xl space-y-8 divide-y divide-gray-200 bg-white 
-                                text-left shadow dark:divide-slate-200/5 dark:bg-slate-800 sm:overflow-hidden sm:rounded-md'>
-                <div className='space-y-8 divide-y divide-gray-200 px-4 py-5 dark:divide-slate-200/5 sm:p-6'>
+            <form className='h-190 mx-auto w-full max-w-xl space-y-8 divide-y
+                                text-left shadow divide-slate-200/5 bg-slate-800 sm:overflow-hidden sm:rounded-md'>
+                <div className='space-y-8 divide-y px-4 py-5 divide-slate-200/5 sm:p-6'>
                     <div>
                         <label>Select .docx file</label>
                         <input type='file' 
@@ -92,8 +107,14 @@ function generatePage() {
                             onChange={(e) => setDuration(e.target.value)}>
                         </input>
                     </div>
-
-                    <div className="flex items-center justify-center ">
+                    <div>
+                        <label id='label'>Lesson Name</label>
+                        <textarea 
+                            placeholder = "Example: Calc 1 class 1"
+                            onChange={(e) => setLessonName(e.target.value)}>
+                        </textarea>
+                    </div>
+                    <div className="flex items-center justify-center text-[var(--text-main)]">
                         <button type ='button' onClick={handleSubmit}>
                             Generate Lesson Plan
                         </button>
@@ -102,14 +123,16 @@ function generatePage() {
             </form>
             
             <div>
-                <h2 className='mt-10 mb-3 text-center text-[rgba(202,200,200,0.633)]
+                <h2 className='mt-10 mb-3 text-center text-[var(--text-main)]
                                 font-bold'>
                                 Output:
                 </h2>
             </div>
             <div className='mx-auto w-full max-w-xl space-y-8 divide-y divide-gray-200 bg-white 
                                 text-left shadow dark:divide-slate-200/5 dark:bg-slate-800 sm:overflow-hidden sm:rounded-md'>
-                <p>{result}</p>
+                <div className='m-5 text-[var(--text-main)]'>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+                </div>
                 
                 <div className='text-center'>
                     {showButton && (

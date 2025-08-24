@@ -44,17 +44,35 @@ app.post('/generate', upload.single('file'), async (req, res) => {
     }
     console.log('file converted');
 
-    const {textbooks, chapters, duration} = req.body;
+    const {textbooks, chapters, duration, title} = req.body;
 
-    const prompt = `Here are the ${textbooks} I want to make my lesson plans based on. The lesson plan should be in point form and should be succint and not detailed
-                    and there should be practice problems provided.
-                    I want the lesson plan to be made for these ${chapters} and the lesson plan should cover a ${duration} hour long class.
-                    Here are examples of exactly what the structure the lesson plans should have. ${result}
+    const prompt = `Here are the ${textbooks} I want to make my lesson plans based on. The lesson plan should be in point form
+                    and there should be practice problems provided taken from the textbook.
+                    I want the lesson plan to be made for these ${chapters} from the textbook and the lesson plan should cover a ${duration} hour long class.
+                    Here are example(s) of exactly what the structure the lesson plans should have. ${result}
+                    Finally, the name/title of the lesson plan should be ${title}
 `
     
     const gptResponse = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
-        messages: [{ role:'user', content: prompt }],
+        messages: [
+            { 
+                role:'system', 
+                content: `You are a teaching assistant that generates detailed lesson plans from a given textbook. Only use information and problems found within the given textbook.
+                        Always respond in valid Markdown with the following features:
+                        - Use '#' for the lesson title
+                        - Use '##' for main sections
+                        - Use bullet points or numbered lists for sub-points
+                        - Use bold for labels
+                        - Use '---' for horizontal dividers
+                        - Use Markdown tables when structuring timelines or resources
+                        Do not collapse everything into a single numbered list.`
+            },
+            {
+                role:'user',
+                content:prompt
+            },
+        ],
     });
 
     console.log('gpt response');

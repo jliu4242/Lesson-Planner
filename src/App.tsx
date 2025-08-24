@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import FormPage from "./pages/generatePage";
-import BlankPage from "./pages/planStorage";
+import GeneratePlans from "./pages/generatePage";
+import SavedPlans from "./pages/planStorage";
 import SignIn from "./pages/signin";
 
 const App: React.FC = () => {
@@ -16,10 +16,10 @@ const App: React.FC = () => {
           <nav className="h-14 bg-gray-800 text-white px-6 flex items-center justify-between">
             <div className="flex gap-2">
               <Link to="/" className="hover:bg-gray-700 px-3 py-2 rounded">
-                Form Page
+                Generate Plans
               </Link>
               <Link to="/blank" className="hover:bg-gray-700 px-3 py-2 rounded">
-                Blank Page
+                Saved Plans
               </Link>
             </div>
             <Link to='/auth' className='px-4 py-2 bg-black border border-transparent text-white rounded-lg hover:border-[#646cff]'>
@@ -30,8 +30,8 @@ const App: React.FC = () => {
           {/* Fill the rest of the screen */}
           <main className="flex-1 bg-black p-10">
             <Routes>
-              <Route path="/" element={<FormPage />} />
-              <Route path="/blank" element={<BlankPage />} />
+              <Route path="/" element={<GeneratePlans />} />
+              <Route path="/blank" element={<SavedPlans />} />
               <Route path='/auth' element={<SignIn />} />
             </Routes>
           </main>
