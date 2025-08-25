@@ -70,6 +70,7 @@ const SignIn: React.FC = () => {
                     <input type='email' 
                             placeholder='email' 
                             value={email}
+                            autoComplete='off'
                             onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div>
@@ -79,6 +80,7 @@ const SignIn: React.FC = () => {
                     <input type='password' 
                         placeholder='password' 
                         value={password}
+                        autoComplete='new-password'
                         onChange={e => setPassword(e.target.value)} />
                 </div>
                     

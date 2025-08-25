@@ -6,7 +6,7 @@ import GeneratePlans from "./pages/generatePage";
 import SavedPlans from "./pages/planStorage";
 import SignIn from "./pages/signin";
 import SignUp from './pages/signup';
-import type { User } from "firebase/auth";
+import { auth } from '../firebase/firebase.ts';
 
 const App: React.FC = () => {
     const [user, setUser] = useState<string | null>(null);
@@ -42,9 +42,11 @@ const App: React.FC = () => {
               <Link to="/generate" className="hover:bg-gray-700 px-3 py-2 rounded">
                 Generate Plans
               </Link>
-              <Link to="/storage" className="hover:bg-gray-700 px-3 py-2 rounded">
-                Saved Plans
-              </Link>
+              {user &&
+                <Link to="/storage" className="hover:bg-gray-700 px-3 py-2 rounded">
+                    Saved Plans
+                </Link>
+                }
             </div>
             <Link to='' onClick={handleRegister} className='px-4 py-2 bg-black border border-transparent text-white rounded-lg hover:border-[#646cff]'>
                 {user ? "Logout" : "Login / Sign Up"}
