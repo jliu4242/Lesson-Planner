@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Firebase from "../../firebase/firebase.ts"
 import { signUp } from '../../firebase/authservice.ts';
 import { useNavigate } from 'react-router-dom';
-
-const firebase = new Firebase();
+import { auth, db } from '../../firebase/firebase.ts';
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignUp: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -19,6 +18,15 @@ const SignUp: React.FC = () => {
             if (validPassword()) {
                 const userCred = await signUp(email, password);
                 console.log("registered user:", userCred.user)
+
+                // Create firestore document for user
+                const user = userCred.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    createdAt: new Date(),
+                });
+                console.log("User added to db with id: ", user.uid);
+
                 navigate('/generate');
             }
             

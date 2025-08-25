@@ -1,7 +1,7 @@
 
 import '../styles/tailwind.css';
 import { useState } from 'react';
-import { db } from '../../firebase/firebase.ts';
+import { db, auth } from '../../firebase/firebase.ts';
 import { collection, addDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -49,8 +49,11 @@ function generatePage() {
     }
 
     const savePlan = async () => {
+        const uid = auth.currentUser?.uid;
+        if (!uid) throw new Error('not logged in');
+
         try {
-            const docRef = await addDoc(collection(db, 'lessonplans'), {
+            const docRef = await addDoc(collection(db, 'users', uid, 'lessonPlans'), {
                 lessonPlanName: lessonName,
                 lessonPlan: result
             });

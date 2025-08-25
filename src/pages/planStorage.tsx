@@ -1,6 +1,6 @@
 import React from "react";
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase/firebase.ts';
+import { db, auth } from '../../firebase/firebase.ts';
 import { useEffect, useState } from 'react';
 import { SelectedPlan } from '../components/selectedPlan.tsx';
 import '../styles/planStorage.css';
@@ -10,8 +10,11 @@ const planStorage: React.FC = () => {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
     useEffect(() => {
+        const uid = auth.currentUser?.uid;
+        if (!uid) throw new Error('no user');
+
         const fetchData = async () => {
-            const plans = await getDocs(collection(db, 'lessonplans'));
+            const plans = await getDocs(collection(db, 'users', uid, 'lessonPlans'));
             const data = plans.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setPlans(data);
         };
