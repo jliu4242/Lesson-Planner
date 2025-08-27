@@ -2,7 +2,7 @@ import React from "react";
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase.ts';
 import { useEffect, useState } from 'react';
-import { SelectedPlan } from '../components/selectedPlan.tsx';
+//import { SelectedPlan } from '../components/selectedPlan.tsx';
 import '../styles/planStorage.css';
 
 const planStorage: React.FC = () => {

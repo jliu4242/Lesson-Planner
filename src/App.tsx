@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { observeAuthState, logOut } from "../firebase/authservice.ts";
 import GeneratePlans from "./pages/generatePage";
 import SavedPlans from "./pages/planStorage";
 import SignIn from "./pages/signin";
 import SignUp from './pages/signup';
-import { auth } from '../firebase/firebase.ts';
 
 const App: React.FC = () => {
     const [user, setUser] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import {Firebase, auth} from "../../firebase/firebase.ts";
+import React, { useState, useEffect } from 'react';
+import { auth } from "../../firebase/firebase.ts";
 import '../styles/firebase-ui.css';
 import '../styles/signin.css';
 import * as firebaseui from 'firebaseui';
@@ -8,15 +8,10 @@ import { logIn } from '../../firebase/authservice.ts';
 import { useNavigate } from 'react-router-dom';
 
 
-const firebase = new Firebase();
-
-
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
-    let ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
 
     useEffect(() => {
         // Reuse AuthUI instance if it already exists

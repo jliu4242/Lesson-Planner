@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { signUp } from '../../firebase/authservice.ts';
 import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../../firebase/firebase.ts';
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { db } from '../../firebase/firebase.ts';
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp: React.FC = () => {
     const [email, setEmail] = useState("");
