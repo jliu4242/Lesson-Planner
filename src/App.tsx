@@ -5,6 +5,7 @@ import { observeAuthState, logOut } from "../firebase/authservice.ts";
 import GeneratePlans from "./pages/generatePage";
 import SavedPlans from "./pages/planStorage";
 import SignIn from "./pages/signin";
+
 const App: React.FC = () => {
     const [user, setUser] = useState<string | null>(null);
     const navigate = useNavigate();
