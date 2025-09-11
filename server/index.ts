@@ -43,6 +43,7 @@ app.post('/generate', upload.single('file'), async (req, res) => {
           });
     }
     console.log('file converted');
+    console.log(result);
 
     const {textbooks, chapters, duration, title} = req.body;
 

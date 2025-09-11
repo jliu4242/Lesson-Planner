@@ -58,7 +58,6 @@ const App: React.FC = () => {
               <Route path="/generate" element={<GeneratePlans />} />
               <Route path="/storage" element={<SavedPlans />} />
               <Route path='/signin' element={<SignIn />} />
-              <Route path='/signup' element={<SignUp />} />
             </Routes>
           </main>
         </div>
