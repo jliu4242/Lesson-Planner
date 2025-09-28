@@ -52,7 +52,7 @@ app.post('/generate', upload.single('file'), async (req, res) => {
                     I want the lesson plan to be made for these ${chapters} from the textbook and the lesson plan should cover a ${duration} hour long class.
                     Here are example(s) of exactly what the structure the lesson plans should have. ${result}
                     Finally, the name/title of the lesson plan should be ${title}
-`
+                    `
     
     const gptResponse = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',

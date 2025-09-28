@@ -5,7 +5,8 @@ import '../styles/firebase-ui.css';
 import '../styles/signin.css';
 import * as firebaseui from 'firebaseui';
 import { logIn } from '../../firebase/authservice.ts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Routes, Route } from 'react-router-dom';
+import SignUp from './signup.tsx';
 
 
 const SignIn: React.FC = () => {
@@ -80,8 +81,13 @@ const SignIn: React.FC = () => {
                 </div>
                     
                 <button className='' type='submit'>Login</button>
-                <p>Don't have an account? Sign up <a href='/signup' className='text-blue-500 underline'>here</a></p>
+                <p>Don't have an account? Sign up <Link to='/signup' className='text-blue-500 underline'>here</Link></p>
             </form>
+            <main>
+                <Routes>
+                    <Route path='/signup' element={<SignUp />} />
+                </Routes>
+            </main>
         </div>
     )
 }
