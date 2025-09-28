@@ -81,13 +81,7 @@ const SignIn: React.FC = () => {
                 </div>
                     
                 <button className='' type='submit'>Login</button>
-                <p>Don't have an account? Sign up <Link to='/signup' className='text-blue-500 underline'>here</Link></p>
             </form>
-            <main>
-                <Routes>
-                    <Route path='/signup' element={<SignUp />} />
-                </Routes>
-            </main>
         </div>
     )
 }

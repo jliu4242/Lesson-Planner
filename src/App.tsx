@@ -5,6 +5,7 @@ import { observeAuthState, logOut } from "../firebase/authservice.ts";
 import GeneratePlans from "./pages/generatePage";
 import SavedPlans from "./pages/planStorage";
 import SignIn from "./pages/signin";
+import SignUp from "./pages/signup.tsx";
 
 const App: React.FC = () => {
     const [user, setUser] = useState<string | null>(null);
@@ -46,9 +47,14 @@ const App: React.FC = () => {
                 </Link>
                 }
             </div>
-            <Link to='' onClick={handleRegister} className='px-4 py-2 bg-black border border-transparent text-white rounded-lg hover:border-[#646cff]'>
-                {user ? "Logout" : "Login / Sign Up"}
-            </Link>
+            <div className='text-right'>
+                {!user && <Link to='/signup' className="hover:bg-gray-700 px-3 py-2 rounded">
+                    Sign Up
+                </Link>}
+                <Link to='' onClick={handleRegister} className="hover:bg-gray-700 px-3 py-2 rounded">
+                    {user ? "Logout" : "Login"}
+                </Link>
+            </div>
           </nav>
   
           {/* Fill the rest of the screen */}
@@ -57,6 +63,7 @@ const App: React.FC = () => {
               <Route path="/generate" element={<GeneratePlans />} />
               <Route path="/storage" element={<SavedPlans />} />
               <Route path='/signin' element={<SignIn />} />
+              <Route path='/signup' element={<SignUp />} />
             </Routes>
           </main>
         </div>
